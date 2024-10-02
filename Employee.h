@@ -2,6 +2,7 @@
 #define EMPLOYEE_H
 
 #include <iostream>
+#include <string>
 
 #include "Share.cpp"
 #include "Share.h"
@@ -18,10 +19,13 @@ class Employee {
   std::string workTypeName;
   bool canReceiveShares;
   int hoursPerWeek;
-  vector<Employee> employeeList;
+  vector<Share*> shareList;
 
  public:
-  int returnOverallShareValue();
+  Employee(int id, std::string name, vector<Share*> theShareList)
+      : employeeID(id), employeeName(name), shareList(theShareList) {};
+  double returnOverallShareValue() { return (*shareList[0]).shareValue; };
+  void addShare(Share* addedShare) { shareList.push_back(addedShare); };
   virtual void calculatePay();
   void printPayments();
   virtual void getWorkTypeName();

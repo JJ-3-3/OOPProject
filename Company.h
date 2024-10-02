@@ -8,7 +8,7 @@
 // using namespace std;
 
 class Company {
- protected:
+ public:
   int curNumEmployees;
   // Generic* companyRep;
   int maxEmployees;
@@ -19,7 +19,10 @@ class Company {
 
  public:
   Company(double shareValue, double theTaxRate,
-          vector<Employee *> listOfEmployees);
+          vector<Employee *> listOfEmployees)
+      : shareValue(shareValue),
+        taxRate(theTaxRate),
+        employeeList(listOfEmployees) {};
   void assignShare(int employeeID, int maxShares, int curShareNum);
   void assignExecShare(int employeeID, int maxShares, int curShareNum);
   void buyBackShare(int employeeID, int curEmployeeShareNum);
