@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
-#include "Share.cpp"
 #include "Share.h"
 using namespace std;
 
@@ -24,11 +24,13 @@ class Employee {
  public:
   Employee(int id, std::string name, vector<Share*> theShareList)
       : employeeID(id), employeeName(name), shareList(theShareList) {};
-  double returnOverallShareValue() { return (*shareList[0]).shareValue; };
+  double returnOverallShareValue() { return *shareList[0]->shareValue; };
   void addShare(Share* addedShare) { shareList.push_back(addedShare); };
-  virtual void calculatePay();
+  // virtual
+  void calculatePay();
   void printPayments();
-  virtual void getWorkTypeName();
+  // virtual
+  void getWorkTypeName();
 };
 
 #endif  // EMPLOYEE_H

@@ -3,9 +3,9 @@
 #include <iostream>
 
 // #include "Employee.cpp"
-// // #include "Employee.h"
 #include "Company.h"
-#include "Share.cpp"
+#include "Employee.h"
+#include "Share.h"
 
 int main() {
   vector<Share*> shareVect;
@@ -29,8 +29,7 @@ int main() {
 
   //   double* variable = create.shareValue;
   //   std::cout << *create.shareValue << std::endl;
-  std::cout << ethan.returnOverallShareValue();
-  << std::endl;
+  std::cout << ethan.returnOverallShareValue() << std::endl;
 
   std::cout << "test worked" << std::endl;
 
