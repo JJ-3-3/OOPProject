@@ -6,7 +6,8 @@
 #include <vector>
 
 #include "Share.h"
-using namespace std;
+#include "Timesheet.h"
+// using namespace std;
 
 class Employee {
  protected:
@@ -19,10 +20,11 @@ class Employee {
   std::string workTypeName;
   bool canReceiveShares;
   int hoursPerWeek;
-  vector<Share*> shareList;
+  std::vector<Share*> shareList;
+  Timesheet employeeTimesheet;
 
  public:
-  Employee(int id, std::string name, vector<Share*> theShareList)
+  Employee(int id, std::string name, std::vector<Share*> theShareList)
       : employeeID(id), employeeName(name), shareList(theShareList) {};
   double returnOverallShareValue() { return *shareList[0]->shareValue; };
   void addShare(Share* addedShare) { shareList.push_back(addedShare); };

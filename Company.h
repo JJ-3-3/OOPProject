@@ -12,14 +12,14 @@ class Company {
   int curNumEmployees;
   // Generic* companyRep;
   int maxEmployees;
-  vector<Employee *> employeeList;
+  std::vector<Employee *> employeeList;
   double shareValue;
 
   double taxRate;
 
  public:
   Company(double shareValue, double theTaxRate,
-          vector<Employee *> listOfEmployees)
+          std::vector<Employee *> listOfEmployees)
       : shareValue(shareValue),
         taxRate(theTaxRate),
         employeeList(listOfEmployees) {};

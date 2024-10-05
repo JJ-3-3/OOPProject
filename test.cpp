@@ -1,18 +1,18 @@
 // testing
 
 #include <iostream>
-
+#include <vector>
 // #include "Employee.cpp"
 #include "Company.h"
 #include "Employee.h"
 #include "Share.h"
 
 int main() {
-  vector<Share*> shareVect;
+  std::vector<Share*> shareVect;
   Employee ethan(1, "Ethan Lawrie", shareVect);
   Employee john(2, "John Doe", shareVect);
 
-  vector<Employee*> employeeVect;
+  std::vector<Employee*> employeeVect;
 
   employeeVect.push_back(&ethan);
   employeeVect.push_back(&john);
