@@ -7,7 +7,7 @@
 
 #include "Share.h"
 #include "Timesheet.h"
-// using namespace std;
+using namespace std;
 
 class Employee {
  protected:
@@ -20,19 +20,22 @@ class Employee {
   std::string workTypeName;
   bool canReceiveShares;
   int hoursPerWeek;
-  std::vector<Share*> shareList;
-  Timesheet employeeTimesheet;
+  vector<Share*> shareList;
+  std::array<std::array<std::pair<int, int>, 7>, 4> weeklyHours;
 
  public:
-  Employee(int id, std::string name, std::vector<Share*> theShareList)
-      : employeeID(id), employeeName(name), shareList(theShareList) {};
-  double returnOverallShareValue() { return *shareList[0]->shareValue; };
-  void addShare(Share* addedShare) { shareList.push_back(addedShare); };
+  Employee(int id, std::string name, vector<Share*> theShareList);
+  double returnOverallShareValue();
+  void addShare(Share* addedShare);
   // virtual
-  void calculatePay();
+  float calculatePay();
   void printPayments();
   // virtual
-  void getWorkTypeName();
+  string getWorkTypeName();
+
+  void setClockTimesForDay(int week, int day, int clockIn, int clockOut);
+
+  void setPay(float pay);
 };
 
 #endif  // EMPLOYEE_H
