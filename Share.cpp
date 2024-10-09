@@ -1,4 +1,3 @@
-
 #include "Share.h"
 
 Share::Share() {
