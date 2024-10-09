@@ -5,11 +5,11 @@
 
 class Share {
  public:
-  double *shareValue;
-  int *numTotalShares;
+  static double shareValue;
+  static int numTotalShares;
 
  public:
-  Share();
-  Share(int *n, double *sharePointer);
+  Share() {};
 };
-#endif  // SHARE_H
+
+#endif

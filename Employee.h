@@ -1,13 +1,25 @@
 #ifndef EMPLOYEE_H
 #define EMPLOYEE_H
 
+#include <cstdio>
 #include <iostream>
 #include <string>
 #include <vector>
 
 #include "Share.h"
 #include "Timesheet.h"
-using namespace std;
+// using namespace std;
+
+struct transactionDetail {
+  float payAmount;
+  time_t startDate;
+  time_t endDate;
+  int timesWorked;
+
+  transactionDetail(float pay, time_t start, time_t end, int workedInt)
+      : payAmount(pay), startDate(start), endDate(end), timesWorked(workedInt) {
+        };
+};
 
 class Employee {
  protected:
@@ -20,20 +32,24 @@ class Employee {
   std::string workTypeName;
   bool canReceiveShares;
   int hoursPerWeek;
-  vector<Share*> shareList;
-  std::array<std::array<std::pair<int, int>, 7>, 4> weeklyHours;
+  std::vector<transactionDetail> payments;
+  std::vector<Share*> shareList;
+  // std::vector<std::vector<std::pair<int, int>, std::pair<int, int>>>
+  //     weeklyHours;
+  Timesheet employeeTimesheet;
 
  public:
-  Employee(int id, std::string name, vector<Share*> theShareList);
-  double returnOverallShareValue();
+  Employee(int id, std::string name);
+  // double returnOverallShareValue();
   void addShare(Share* addedShare);
   // virtual
   float calculatePay();
   void printPayments();
   // virtual
-  string getWorkTypeName();
+  std::string getWorkTypeName();
 
   void setClockTimesForDay(int week, int day, int clockIn, int clockOut);
+  void clock() { employeeTimesheet.clockIn(); };
 
   void setPay(float pay);
 };

@@ -10,16 +10,17 @@
 
 class Timesheet {
  private:
-  std::vector<TimesheetEntry> timesheetEntries;
   int emplyeeID;
   bool hoursWorkedTrue;
 
  public:
+  time_t prevTime;
+  std::vector<TimesheetEntry> timesheetEntries;
   Timesheet(/* args */);
   ~Timesheet();
 
   // returns the total time from the timesheets in hours
-  int getTotalWorkedTime();
+  float getTotalWorkedTime();
   void resetTimesheetEntries();
   void printTimesheet();
   void addEntry(time_t startedTime, time_t endedTime, int breakTime,

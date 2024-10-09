@@ -10,14 +10,14 @@
 class TimesheetEntry {
  private:
   /* data */
+
+  public:
   time_t startTime;
   time_t endTime;
-
   int breakDuration;
 
   std::string workingPeriodType;
 
- public:
   int timeWorked;
   double hoursMultiplier;
   TimesheetEntry(time_t startedTime, time_t endedTime, int breakTime,

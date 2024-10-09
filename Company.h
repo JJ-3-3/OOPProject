@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Employee.h"
+#include "Share.h"
 // using namespace std;
 
 class Company {
@@ -13,16 +14,16 @@ class Company {
   // Generic* companyRep;
   int maxEmployees;
   std::vector<Employee *> employeeList;
-  double shareValue;
+  // double shareValue;
 
   double taxRate;
 
  public:
   Company(double shareValue, double theTaxRate,
           std::vector<Employee *> listOfEmployees)
-      : shareValue(shareValue),
-        taxRate(theTaxRate),
-        employeeList(listOfEmployees) {};
+      : taxRate(theTaxRate), employeeList(listOfEmployees) {
+    Share::shareValue = shareValue;
+  };
   void assignShare(int employeeID, int maxShares, int curShareNum);
   void assignExecShare(int employeeID, int maxShares, int curShareNum);
   void buyBackShare(int employeeID, int curEmployeeShareNum);
