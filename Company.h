@@ -29,6 +29,7 @@ class Company {
   void buyBackShare(int employeeID, int curEmployeeShareNum);
   void increaseTotalShareNum(int increase, int value);
   double returnTotalShareValue();
+  Employee *findEmployee(std::string username);
 };
 
 #endif

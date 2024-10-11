@@ -15,17 +15,21 @@ using namespace std;
 int main() {
   bool hasFinished = false;
 
-  Employee ethan(1, "Ethan Lawrie");
-  Employee john(2, "John Doe");
+  Employee ethan(1, "Ethan Lawrie", "elawrie", "test123");
+  Employee john(2, "John Doe", "jdoe", "strongpassword");
 
-  Employee companyPlaceholder(3, "Company");
+  Employee companyPlaceholder(0, "Company", "company", "companypassword");
+  Employee defaultUser(-1, "User", "user", "default");
 
   vector<Employee*> employeeVect;
+
+  employeeVect.push_back(&defaultUser);
+  employeeVect.push_back(&companyPlaceholder);
 
   employeeVect.push_back(&ethan);
   employeeVect.push_back(&john);
 
-  Company google(10, 0.2, employeeVect);
+  Company company(10, 0.2, employeeVect);
 
   Share share1;
   Share share2;
@@ -44,30 +48,144 @@ int main() {
     companyPlaceholder.addShare(&initialShares[i]);
   }
 
-  //   while (!hasFinished) {
-  //     }
-  //   ethan.addShare(&share1);
+  std::cout << "Welcome to the share registry" << std::endl;
 
-  /* code */
+  std::string inputUsername;
+  std::string inputPassword;
 
-  int a = 10;
+  Employee* loggedUser;
 
-  //   double* variable = create.shareValue;
-  //   std::cout << *create.shareValue << std::endl;
-  // std::cout << ethan.returnOverallShareValue() << std::endl;
+  bool hasLoggedIn = false;
+  Employee* fetchedEmployee;
 
-  std::cout << "test worked" << std::endl;
+  // not logged in
 
-  // give a base pay rate
-  ethan.setPay(25.60);
-  // std::this_thread::sleep_for(std::chrono::seconds(5));
+  while (!hasLoggedIn) {
+    std::cout << "Please enter your username: ";
+    std::cin >> inputUsername;
+    fetchedEmployee = company.findEmployee(inputUsername);
 
-  // cout << "hours worked for month, expecting 160 * payRate" << endl;
-  ethan.clock();
+    for (int i = 0; i < 4; i++) {
+      std::cout << "Please enter your password: ";
+      std::cin >> inputPassword;
 
-  std::this_thread::sleep_for(std::chrono::seconds(8));
-  ethan.calculatePay();
-  ethan.printPayments();
+      if (inputPassword == fetchedEmployee->get_password()) {
+        hasLoggedIn = true;
+        loggedUser = fetchedEmployee;
+        break;
+      } else if (i == 3) {
+        std::cout << "too many login attempts! Try again\n" << std::endl;
+      }
+    }
+  }
+  bool isAdmin = false;
+
+  std::cout << "~~~~~~~~~~~~~~~~" << endl;
+
+  if (loggedUser->isAnAdmin()) {
+    isAdmin = true;
+  }
+
+  std::cout << "Logged in as: " << loggedUser->get_name() << std::endl;
+
+  // navigateToPage
+
+  // std::this_thread::sleep_for(std::chrono::seconds(8));
+  int navigatedPageIndex;
+  std::string inputString;
+  int inputInt;
+
+  std::cout << std::endl;
+
+  std::cout << "Navigate to where? (1:Timesheet, 2:Finance): ";
+  std::cin >> inputInt;
+
+  if (inputInt == 1) {
+    // clrscr();
+    std::cout << "Timesheet" << std::endl;
+
+    Employee* employeeManaged = loggedUser;
+
+    if (isAdmin) {
+      std::cout
+          << "Would you like to manage another employees timesheet? (Y/N): ";
+      std::cin >> inputString;
+      if (inputString == "Y") {
+        std::cout << "\nPlease enter employee username: ";
+        std::cin >> inputString;
+
+        employeeManaged = company.findEmployee(inputString);
+      }
+    }
+
+    std::cout << std::endl;
+
+    bool canLeave = false;
+
+    while (!canLeave) {
+      std::cout
+          << "Would you like to: \n1. View Timesheet for current employee \n2. "
+             "Enter in a timesheet working slot for the current employee \n3. "
+             "Clock in for the current employee \n4. Clock out for the current "
+             "employee \nEnter your choice here: ";
+
+      std::cin >> inputInt;
+
+      std::cout << std::endl;
+
+      int breakLength;
+      std::string theWorkingType;
+      double hoursMult;
+
+      switch (inputInt) {
+        case 1:
+          employeeManaged->printTimesheetEntries();
+          break;
+
+        case 2:
+          // TODO
+
+        case 3:
+          employeeManaged->clock();
+          break;
+
+        case 4:
+
+          std::cout << "\nPlease enter your work type for the period (Normal, "
+                       "Sick, Travel): ";
+          std::cin >> theWorkingType;
+
+          if (theWorkingType == "Normal") {
+            hoursMult = 1;
+          } else if (theWorkingType == "Sick") {
+            hoursMult = 0.8;
+          } else if (theWorkingType == "Travel") {
+            hoursMult = 1.5;
+          } else {
+            hoursMult = 1;
+          }
+
+          std::cout << "Please set break duration: ";
+          std::cin >> breakLength;
+          if (breakLength < 0 || breakLength > 1000) {
+            breakLength = 0;
+          }
+
+          if (isAdmin) {
+            std::cout << "Please set the hours multiplier: ";
+            std::cin >> hoursMult;
+          }
+
+          employeeManaged->clockOut(theWorkingType, hoursMult, breakLength);
+          break;
+
+        default:
+          canLeave = true;
+          break;
+      }
+    }
+  }
+  // scanf
 
   return 0;
 }

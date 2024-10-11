@@ -52,8 +52,9 @@ float Timesheet::getTotalWorkedTime() {
 void Timesheet::resetTimesheetEntries() { timesheetEntries.clear(); }
 
 void Timesheet::printTimesheet() {
+  std::cout << "\n~~~~~~~~~~~~~~~~~~\n" << std::endl;
   for (int i = 0; i < timesheetEntries.size(); i++) {
-    std::cout << "Worked from " << timeToHours(timesheetEntries[i].startTime)
+    std::cout << "\nWorked from " << timeToHours(timesheetEntries[i].startTime)
               << " to " << timeToHours(timesheetEntries[i].endTime)
               << std::endl;
 
@@ -66,9 +67,10 @@ void Timesheet::printTimesheet() {
     if (timesheetEntries[i].breakDuration > 0) {
       std::cout << "Break Length: " << std::fixed << std::setprecision(2)
                 << static_cast<float>(timesheetEntries[i].breakDuration) / 60
-                << "m " << std::endl;
+                << " minutes " << std::endl;
     }
   }
+  std::cout << "\n~~~~~~~~~~~~~~~~~~\n" << std::endl;
 }
 
 void Timesheet::addEntry(time_t startedTime, time_t endedTime, int breakTime,
@@ -78,4 +80,20 @@ void Timesheet::addEntry(time_t startedTime, time_t endedTime, int breakTime,
       startedTime, endedTime, breakTime, workingPeriodType, hoursMultiplier));
 }
 
-void Timesheet::clockIn() { timesheetEntries.push_back(TimesheetEntry()); }
+void Timesheet::clockOutAll() {
+  for (int i = 0; i < timesheetEntries.size(); i++) {
+    if (timesheetEntries[i].hoursMultiplier == -1) {
+      timesheetEntries[i].clockOut("Normal", 1, 0);
+    }
+  }
+}
+
+void Timesheet::clockOutSingle(std::string worktype, double hourMult,
+                               int breakLength) {
+  timesheetEntries.back().clockOut(worktype, hourMult, breakLength);
+}
+
+void Timesheet::clockIn() {
+  clockOutAll();
+  timesheetEntries.push_back(TimesheetEntry());
+}

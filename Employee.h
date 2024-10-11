@@ -37,9 +37,12 @@ class Employee {
   // std::vector<std::vector<std::pair<int, int>, std::pair<int, int>>>
   //     weeklyHours;
   Timesheet employeeTimesheet;
+  std::string username;
+  std::string password;
 
  public:
-  Employee(int id, std::string name);
+  Employee(int id, std::string name, std::string username,
+           std::string password);
   // double returnOverallShareValue();
   void addShare(Share* addedShare);
   // virtual
@@ -50,6 +53,16 @@ class Employee {
 
   void setClockTimesForDay(int week, int day, int clockIn, int clockOut);
   void clock() { employeeTimesheet.clockIn(); };
+  void clockOut(std::string worktype, double hourMult, int breakLength) {
+    employeeTimesheet.clockOutSingle(worktype, hourMult, breakLength);
+  };
+  void printTimesheetEntries() { employeeTimesheet.printTimesheet(); };
+
+  int get_id() { return employeeID; };
+  std::string get_username() { return username; };
+  std::string get_name() { return employeeName; };
+  std::string get_password() { return password; };
+  bool isAnAdmin() { return isAdmin; }
 
   void setPay(float pay);
 };

@@ -31,8 +31,12 @@ std::string timeToString(time_t t) {
   return std::string(formattedStr);
 }
 
-Employee::Employee(int id, std::string name)
-    : employeeID(id), employeeName(name) {}
+Employee::Employee(int id, std::string name, std::string username,
+                   std::string password)
+    : employeeID(id),
+      employeeName(name),
+      username(username),
+      password(password) {}
 
 // double Employee::returnOverallShareValue() { return shareList[0]->shareValue;
 // }

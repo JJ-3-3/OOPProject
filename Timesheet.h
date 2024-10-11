@@ -26,6 +26,8 @@ class Timesheet {
   void addEntry(time_t startedTime, time_t endedTime, int breakTime,
                 std::string workingPeriodType, double hoursMultiplier);
   void clockIn();
+  void clockOutAll();
+  void clockOutSingle(std::string worktype, double hourMult, int breakLength);
 };
 
 #endif
