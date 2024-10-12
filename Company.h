@@ -2,6 +2,9 @@
 #ifndef COMPANY_H
 #define COMPANY_H
 
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 #include <vector>
 
 #include "Employee.h"
@@ -27,7 +30,8 @@ class Company {
   void assignShare(int employeeID, int maxShares, int curShareNum);
   void assignExecShare(int employeeID, int maxShares, int curShareNum);
   void buyBackShare(int employeeID, int curEmployeeShareNum);
-  void increaseTotalShareNum(int increase, int value);
+  void changeTotalShareValue();
+  void increaseTotalShareNum(int increase);
   double returnTotalShareValue();
   Employee *findEmployee(std::string username);
 };

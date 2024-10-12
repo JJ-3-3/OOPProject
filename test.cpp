@@ -11,8 +11,8 @@ using namespace std;
 
 int main() {
   // vector<Share*> shareVect;
-  Employee ethan(1, "Ethan Lawrie");
-  Employee john(2, "John Doe");
+  Employee ethan(1, "Ethan Lawrie", "elawrie", "test123");
+  Employee john(2, "John Doe", "jdoe", "strongpassword");
 
   vector<Employee*> employeeVect;
 

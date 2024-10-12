@@ -9,7 +9,8 @@ class Share {
   static int numTotalShares;
 
  public:
-  Share() {};
+  Share();
+  Share(double shareValue, int numTotalShares);
 };
 
-#endif
+#endif  // SHARE_H

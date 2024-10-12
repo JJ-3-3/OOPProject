@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "Admin.h"
+
 // using namespace std;
 
 class CEO : public Admin {

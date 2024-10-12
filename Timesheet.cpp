@@ -70,7 +70,8 @@ void Timesheet::printTimesheet() {
                 << " minutes " << std::endl;
     }
   }
-  std::cout << "\n~~~~~~~~~~~~~~~~~~\n" << std::endl;
+
+    std::cout << "\n~~~~~~~~~~~~~~~~~~\n" << std::endl;
 }
 
 void Timesheet::addEntry(time_t startedTime, time_t endedTime, int breakTime,
