@@ -9,13 +9,10 @@
 #include <vector>
 
 std::string timeToHours(time_t t) {
-  // Convert time_t to tm struct for local time
   struct tm* timeInfo = localtime(&t);
 
-  // Create a buffer to store the formatted string
   char formattedStr[80];
 
-  // Format the date and time
   strftime(formattedStr, sizeof(formattedStr), "%H:%M:%S", timeInfo);
 
   return std::string(formattedStr);
@@ -52,26 +49,34 @@ float Timesheet::getTotalWorkedTime() {
 void Timesheet::resetTimesheetEntries() { timesheetEntries.clear(); }
 
 void Timesheet::printTimesheet() {
-  std::cout << "\n~~~~~~~~~~~~~~~~~~\n" << std::endl;
+  std::cout << "\n================ Timesheet Entries ================\n"
+            << std::endl;
+
   for (int i = 0; i < timesheetEntries.size(); i++) {
-    std::cout << "\nWorked from " << timeToHours(timesheetEntries[i].startTime)
-              << " to " << timeToHours(timesheetEntries[i].endTime)
-              << std::endl;
+    std::cout << "Entry #" << i + 1 << ":\n";
+    std::cout << "Worked from " << timeToHours(timesheetEntries[i].startTime)
+              << " to " << timeToHours(timesheetEntries[i].endTime) << "\n";
 
-    std::cout << "Worked for ~ " << std::fixed << std::setprecision(2)
+    std::cout << "Total Hours Worked: " << std::fixed << std::setprecision(2)
               << (static_cast<float>(timesheetEntries[i].timeWorked) / 3600)
-              << " hours " << std::endl;
+              << " hours\n";
 
-    std::cout << "Type of work: " << timesheetEntries[i].workingPeriodType
-              << std::endl;
+    std::cout << "Type of Work: " << timesheetEntries[i].workingPeriodType
+              << "\n";
+
     if (timesheetEntries[i].breakDuration > 0) {
       std::cout << "Break Length: " << std::fixed << std::setprecision(2)
-                << static_cast<float>(timesheetEntries[i].breakDuration) / 60
-                << " minutes " << std::endl;
+                << static_cast<float>(timesheetEntries[i].breakDuration)
+                << " minutes\n";
+    } else {
+      std::cout << "Break Length: None\n";
     }
+
+    std::cout << "----------------------------------------------------\n";
   }
 
-    std::cout << "\n~~~~~~~~~~~~~~~~~~\n" << std::endl;
+  std::cout << "\n===================================================\n"
+            << std::endl;
 }
 
 void Timesheet::addEntry(time_t startedTime, time_t endedTime, int breakTime,

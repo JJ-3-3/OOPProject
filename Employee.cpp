@@ -9,34 +9,29 @@
 #include <string>
 
 time_t stringToTime(const std::string& dateStr) {
-  struct tm tm = {0};  // Initialize the structure to zero
+  struct tm tm = {0};
 
-  // Define the format to match the input date string
   strptime(dateStr.c_str(), "%Y-%m-%d %H:%M:%S", &tm);
 
-  // Convert the tm structure to time_t
   return mktime(&tm);
 }
 
 std::string timeToString(time_t t) {
-  // Convert time_t to tm struct for local time
   struct tm* timeInfo = localtime(&t);
-
-  // Create a buffer to store the formatted string
   char formattedStr[80];
 
-  // Format the date and time
   strftime(formattedStr, sizeof(formattedStr), "%Y-%m-%d %H:%M:%S", timeInfo);
 
   return std::string(formattedStr);
 }
 
 Employee::Employee(int id, std::string name, std::string username,
-                   std::string password)
+                   std::string password, bool anAdmin)
     : employeeID(id),
       employeeName(name),
       username(username),
-      password(password) {}
+      password(password),
+      isAdmin(anAdmin) {}
 
 // double Employee::returnOverallShareValue() { return shareList[0]->shareValue;
 // }
@@ -45,12 +40,7 @@ void Employee::addShare(Share* addedShare) { shareList.push_back(addedShare); }
 float Employee::calculatePay() {
   float hoursWorked = 0;
   float fullPay;
-  // for (int i = 0; i < 4; i++) {
-  //   for (int k = 0; k < 7; k++) {
-  //     std::pair<int, int> times = weeklyHours[i][k];
-  //     tempPay = tempPay + payRate * (times.second - times.first);
-  //   }
-  // }
+
   int timesWorked = employeeTimesheet.timesheetEntries.size();
   hoursWorked = employeeTimesheet.getTotalWorkedTime();
 
@@ -72,19 +62,46 @@ float Employee::calculatePay() {
                                          time(0), timesWorked));
   }
 
+  printPayments();
   return fullPay;
 }
 
+// void Employee::printPayments() {
+//   for (int i = 0; i < payments.size(); i++) {
+//     // printf("Period: %s to %s \n Pay: %0.2f",
+//     //        timeToString(payments[i].startDate),
+//     //        timeToString(payments[i].endDate), payments[i].payAmount);
+//     std::cout << "\nPayment Period: " << timeToString(payments[i].startDate)
+//               << " to " << timeToString(payments[i].endDate) << "\nPay: $"
+//               << std::fixed << std::setprecision(8) << payments[i].payAmount
+//               << "\nTimes Worked: " << payments[i].timesWorked << std::endl;
+//   }
+// }
+
 void Employee::printPayments() {
-  for (int i = 0; i < payments.size(); i++) {
-    // printf("Period: %s to %s \n Pay: %0.2f",
-    //        timeToString(payments[i].startDate),
-    //        timeToString(payments[i].endDate), payments[i].payAmount);
-    std::cout << "Period: " << timeToString(payments[i].startDate) << " to "
-              << timeToString(payments[i].endDate) << "\nPay: $" << std::fixed
-              << std::setprecision(2) << payments[i].payAmount
-              << "\nTimes Worked: " << payments[i].timesWorked << std::endl;
+  std::cout << std::setw(100) << std::setfill('=') << "=" << std::setfill(' ')
+            << std::endl;
+  std::cout << std::left << std::setw(40) << "Payment Period" << std::right
+            << std::setw(30) << "Pay" << std::setw(20) << "Times Worked"
+            << std::endl;
+  std::cout << std::setw(100) << std::setfill('=') << "=" << std::setfill(' ')
+            << std::endl;
+
+  for (size_t i = 0; i < payments.size(); i++) {
+    std::stringstream periodStream;
+    periodStream << timeToString(payments[i].startDate) << " to "
+                 << timeToString(payments[i].endDate);
+
+    std::stringstream payStream;
+    payStream << "$" << std::fixed << std::setprecision(2)
+              << payments[i].payAmount;
+
+    std::cout << std::left << std::setw(50) << periodStream.str() << std::right
+              << std::setw(25) << payStream.str() << std::setw(25)
+              << payments[i].timesWorked << std::endl;
   }
+  std::cout << std::setw(100) << std::setfill('=') << "=" << std::setfill(' ')
+            << std::endl;
 }
 
 // virtual

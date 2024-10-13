@@ -30,7 +30,7 @@ void TimesheetEntry::clockOut(std::string worktype, double hourMult,
 
 void TimesheetEntry::calculateEntryTime(time_t start, time_t end,
                                         int breakTime) {
-  timeWorked = (end - start) - breakTime;
+  timeWorked = (end - start) - (breakTime * 60);
   if (timeWorked < 0) {
     // set time to 0 if break was longer than worked time
     timeWorked = 0;

@@ -41,8 +41,8 @@ class Employee {
   std::string password;
 
  public:
-  Employee(int id, std::string name, std::string username,
-           std::string password);
+  Employee(int id, std::string name, std::string username, std::string password,
+           bool anAdmin);
   // double returnOverallShareValue();
   void addShare(Share* addedShare);
   // virtual
