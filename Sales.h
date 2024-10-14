@@ -8,15 +8,18 @@
 
 using namespace std;
 
-class Sales : public Normal {
- protected:
-  float payRate;
+class Sales : public Normal
+{
+protected:
   string employeeName;
   int employeeID;
+  float payRate;
+  int commission;
 
- public:
+public:
   Sales();
   Sales(string employeeName, int employeeID, float payRate);
+  void calcCommission();
 };
 
-#endif  // INTERN_H
+#endif // INTERN_H

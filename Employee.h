@@ -10,7 +10,8 @@
 #include "Timesheet.h"
 // using namespace std;
 
-struct transactionDetail {
+struct transactionDetail
+{
   float payAmount;
   time_t startDate;
   time_t endDate;
@@ -21,8 +22,9 @@ struct transactionDetail {
         };
 };
 
-class Employee {
- protected:
+class Employee
+{
+protected:
   int employeeID;
   std::string employeeName;
   float payRate;
@@ -33,18 +35,19 @@ class Employee {
   bool canReceiveShares;
   int hoursPerWeek;
   std::vector<transactionDetail> payments;
-  std::vector<Share*> shareList;
+  std::vector<Share *> shareList;
   // std::vector<std::vector<std::pair<int, int>, std::pair<int, int>>>
   //     weeklyHours;
   Timesheet employeeTimesheet;
   std::string username;
   std::string password;
 
- public:
+public:
+  Employee();
   Employee(int id, std::string name, std::string username, std::string password,
            bool anAdmin);
   // double returnOverallShareValue();
-  void addShare(Share* addedShare);
+  void addShare(Share *addedShare);
   // virtual
   float calculatePay();
   void printPayments();
@@ -53,7 +56,8 @@ class Employee {
 
   void setClockTimesForDay(int week, int day, int clockIn, int clockOut);
   void clock() { employeeTimesheet.clockIn(); };
-  void clockOut(std::string worktype, double hourMult, int breakLength) {
+  void clockOut(std::string worktype, double hourMult, int breakLength)
+  {
     employeeTimesheet.clockOutSingle(worktype, hourMult, breakLength);
   };
   void printTimesheetEntries() { employeeTimesheet.printTimesheet(); };
@@ -67,4 +71,4 @@ class Employee {
   void setPay(float pay);
 };
 
-#endif  // EMPLOYEE_H
+#endif // EMPLOYEE_H
