@@ -19,20 +19,20 @@ int main() {
   Employee ethan(1, "Ethan Lawrie", "elawrie", "test123", true);
   Employee john(2, "John Doe", "jdoe", "strongpassword", false);
 
-  std::cout << "JDOE ADMIN STATUS: " << john.isAnAdmin() << std::endl;
-
   Employee companyPlaceholder(0, "Company", "company", "companypassword", true);
   Employee defaultUser(-1, "User", "user", "default", false);
 
   std::vector<Employee*> employeeVect;
 
   employeeVect.push_back(&defaultUser);
-  employeeVect.push_back(&companyPlaceholder);
+  // employeeVect.push_back(&companyPlaceholder);
 
   employeeVect.push_back(&ethan);
   employeeVect.push_back(&john);
 
   Company company(10, 0.2, employeeVect);
+
+  company.companyRep = &companyPlaceholder;
 
   Share share1;
   Share share2;
@@ -51,9 +51,7 @@ int main() {
     companyPlaceholder.addShare(&initialShares[i]);
   }
 
-  std::cout << "Welcome to the share registry" << std::endl;
-
-    // initialises system loader and the rest of the process
+  // initialises system loader and the rest of the process
   pageLoader systemLoader = pageLoader(&company);
 
   // std::this_thread::sleep_for(std::chrono::seconds(8));

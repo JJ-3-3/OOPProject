@@ -14,25 +14,27 @@
 class Company {
  public:
   int curNumEmployees;
-  // Generic* companyRep;
+
   int maxEmployees;
-  std::vector<Employee *> employeeList;
+
   // double shareValue;
 
   double taxRate;
 
  public:
+  std::vector<Employee *> employeeList;
+  Employee *companyRep;
   Company(double shareValue, double theTaxRate,
           std::vector<Employee *> listOfEmployees)
       : taxRate(theTaxRate), employeeList(listOfEmployees) {
     Share::shareValue = shareValue;
   };
-  void assignShare(int employeeID, int maxShares, int curShareNum);
+  void assignShares(Employee *receivingEmp, int shareAmount);
   void assignExecShare(int employeeID, int maxShares, int curShareNum);
-  void buyBackShare(int employeeID, int curEmployeeShareNum);
+  void buyBackShare(Employee *targetEmp);
   void changeTotalShareValue();
   void increaseTotalShareNum(int increase);
-  double returnTotalShareValue();
+  // double returnTotalShareValue();
   Employee *findEmployee(std::string username);
 };
 

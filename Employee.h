@@ -6,9 +6,12 @@
 #include <string>
 #include <vector>
 
+// #include "Company.h"
 #include "Share.h"
 #include "Timesheet.h"
 // using namespace std;
+
+class Company;
 
 struct transactionDetail {
   float payAmount;
@@ -33,7 +36,7 @@ class Employee {
   bool canReceiveShares;
   int hoursPerWeek;
   std::vector<transactionDetail> payments;
-  std::vector<Share*> shareList;
+
   // std::vector<std::vector<std::pair<int, int>, std::pair<int, int>>>
   //     weeklyHours;
   Timesheet employeeTimesheet;
@@ -41,12 +44,15 @@ class Employee {
   std::string password;
 
  public:
+  std::vector<Share*> shareList;
   Employee(int id, std::string name, std::string username, std::string password,
            bool anAdmin);
   // double returnOverallShareValue();
   void addShare(Share* addedShare);
+  int totalShares() { return shareList.size(); }
+  void printShareSummary();
   // virtual
-  float calculatePay();
+  float calculatePay(Company* thecompany);
   void printPayments();
   // virtual
   std::string getWorkTypeName();
@@ -56,6 +62,13 @@ class Employee {
   void clockOut(std::string worktype, double hourMult, int breakLength) {
     employeeTimesheet.clockOutSingle(worktype, hourMult, breakLength);
   };
+
+  void clockFullEntry(time_t startTime, time_t endTime, std::string worktype,
+                      double hourMult, int breakLength) {
+    employeeTimesheet.addEntry(startTime, endTime, breakLength, worktype,
+                               hourMult);
+  };
+
   void printTimesheetEntries() { employeeTimesheet.printTimesheet(); };
 
   int get_id() { return employeeID; };
