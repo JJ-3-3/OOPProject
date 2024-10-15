@@ -10,7 +10,7 @@ CXXFLAGS = -o testing
 SRC = Employee.cpp Share.cpp Timesheet.cpp TimesheetEntry.cpp Company.cpp Admin.cpp pageLoader.cpp Normal.cpp Manager.cpp Accounting.cpp
 
 # Default target to build and test
-all: test real share page system share2
+all: test share share2 target
 
 # Target for testing the basic functionality
 test: test.cpp $(SRC)
@@ -19,8 +19,8 @@ test: test.cpp $(SRC)
 	rm -f testing
 
 # Target for real functionality testing
-real: real.cpp $(SRC)
-	$(CXX) $(CXXFLAGS) real.cpp $(SRC)
+target: target.cpp $(SRC)
+	$(CXX) $(CXXFLAGS) target.cpp $(SRC)
 	./testing
 	rm -f testing
 
@@ -46,4 +46,4 @@ share2: testShareChange.cpp $(SRC)
 clean:
 	rm -f testing testingRandShareFunc
 
-.PHONY: all test real share page share2 clean
+.PHONY: all test target share page share2 clean

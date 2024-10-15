@@ -19,13 +19,22 @@ class TimesheetEntry {
 
   int timeWorked;
   double hoursMultiplier;
+
+  // paramaterised constructor
   TimesheetEntry(time_t startedTime, time_t endedTime, int breakTime,
                  std::string workingPeriodType, double hoursMultiplier);
+
+  // default constructor
   TimesheetEntry(/* args */);
+
+  // timesheet destructor
   ~TimesheetEntry();
+
   // void clockIn(time_t currentTime); not needed as ticket is auto clocked
   void clockOut(std::string worktype, double hourMult, int breakLength);
+
+  // calculates entry work type
   void calculateEntryTime(time_t start, time_t end, int breakTime);
 };
 
-#endif
+#endif  // TIMESHEETENTRY_H

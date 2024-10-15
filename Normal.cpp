@@ -58,6 +58,7 @@ float Normal::calculatePay(Company* company) {
     }
   }
 
+  // print basic finances
   printShareSummary();
 
   printPayments();

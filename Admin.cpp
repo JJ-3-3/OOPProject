@@ -1,9 +1,11 @@
 #include "Admin.h"
 
 float Admin::calculatePay(Company* company) {
+  // initialise hours worked
   float hoursWorked = 0;
   float fullPay;
 
+  // variables to sstore times worked and hours
   float timesWorked = employeeTimesheet.timesheetEntries.size();
   hoursWorked = employeeTimesheet.getTotalWorkedTime();
 
@@ -44,8 +46,8 @@ float Admin::calculatePay(Company* company) {
     company->assignShares(this, company->companyRep->totalShares());
   } else {
     // means there are no shares
-    //  checks to see if anyone can give share amount and the company first
-    //  buybacks them;
+    // checks to see if anyone can give share amount and the company first
+    // buybacks them;
     for (int i = 0; i < company->employeeList.size(); i++) {
       if (company->employeeList[i]->totalShares() >= sharesAllowed &&
           company->employeeList[i] != this) {
@@ -56,8 +58,10 @@ float Admin::calculatePay(Company* company) {
     }
   }
 
+  // virtual functions from Employee class
   printShareSummary();
 
   printPayments();
+
   return fullPay;
 }

@@ -1,12 +1,25 @@
 #include "pageLoader.h"
 
+#include <math.h>
+
 #include <chrono>
 #include <cstring>
 #include <ctime>
+#include <iomanip>
+#include <sstream>
 #include <thread>
 
+#include "Accounting.h"
+#include "CEO.h"
 #include "Company.h"
+#include "Employee.h"
+#include "Generic.h"
+#include "Intern.h"
+#include "Manager.h"
+#include "Receptionist.h"
+#include "Sales.h"
 
+// set to page one for initialisation
 int pageLoader::currentPage = 1;
 
 void clearScreen() {
@@ -19,6 +32,7 @@ void clearScreen() {
 #endif
 }
 
+// coverts a string to time for clocking in and out
 bool stringToTime(const std::string& dateStr, time_t& resultTime) {
   struct tm tm;
   memset(&tm, 0, sizeof(struct tm));  // Makes tm zero
@@ -42,9 +56,12 @@ bool stringToTime(const std::string& dateStr, time_t& resultTime) {
   return true;
 }
 
+// load page for the company object
 pageLoader::pageLoader(Company* theCompany) {
   this->company = theCompany;
   this->currentPage = currentPage;
+
+  // neatness and readability
   clearScreen();
   std::cout << "==============================================================="
                "===================\n\n";
@@ -52,18 +69,24 @@ pageLoader::pageLoader(Company* theCompany) {
                "               ~~~~\n\n";
   std::cout << "==============================================================="
                "===================\n\n\n\n";
+
+  // allow employees to log in using credentials
   loadLogInPage();
 }
 
+// destructor
 pageLoader::~pageLoader() {}
 
+// functionto navigate through pages
 void pageLoader::navigateToPage(int pageIndex) {
-  if (pageIndex >= 1 && pageIndex <= 3) {
+  if (pageIndex >= 1 && pageIndex <= 4) {
     // adds a bunch of endlines if it is going to a new page
     // std::cout << "\n\n\n\n\n\n\n\n\n\n" << std::endl;
     clearScreen();
     currentPage = pageIndex;
   }
+
+  // switch statement for each page that is desired
   switch (pageIndex) {
     case 1:
       loadMainPage();
@@ -76,22 +99,33 @@ void pageLoader::navigateToPage(int pageIndex) {
       loadFinancePage();
       break;
 
+    case 4:
+      loadManagePage();
+      break;
+
     default:
       std::cout << "Not a valid page index! \n" << std::endl;
       break;
   }
 }
 
+// loads the finance page
 void pageLoader::loadFinancePage() {
-  std::cout << "Current Share Price is: " << Share::shareValue << std::endl;
-  std::cout << "Current Number of Issued Shares is: " << Share::numTotalShares
-            << std::endl;
   std::string inputString;
   std::string exitString = "Q";
 
+  // run while loop to allow for abuse cases and display finance page
   while (exitString == "Q") {
     std::cout << "==================== Finance Page ====================\n\n";
 
+    // display basic details on current company state
+    std::cout << "Current Share Price is: $" << Share::shareValue << std::endl;
+    std::cout << "Current Number of Issued Shares is: " << Share::numTotalShares
+              << std::endl;
+    std::cout << "Total Company value: $" << std::fixed << std::setprecision(2)
+              << Share::shareValue * Share::numTotalShares << "\n";
+
+    // selection of options for next page to navigate to
     std::cout << "Please choose an option:\n";
     std::cout << "  1. Process payments for current user\n";
     std::cout << "  2. Process payments for a specific user\n";
@@ -104,6 +138,10 @@ void pageLoader::loadFinancePage() {
 
     std::cin >> inputString;
     std::cout << std::endl;
+
+    /************************************************************************************
+    options to be run
+    ************************************************************************************/
 
     if (inputString == "1") {
       curEmployee->calculatePay(company);
@@ -150,18 +188,21 @@ void pageLoader::loadFinancePage() {
       fetchedEmployee->printPayments();
     } else if (inputString == "5") {
       curEmployee->printShareSummary();
-      std::cout << "Current total number of shares issued by the company: "
-                << Share::numTotalShares << std::endl;
     } else if (inputString == "E" || inputString == "e") {
       exit(0);
     } else if (inputString == "Q" || inputString == "q") {
       navigateToPage(1);
     }
+
+    /************************************************************************************
+    options to be run
+    ************************************************************************************/
   }
 
   // curEmployee->printPayments();
 }
 
+// loads the timesheet page
 void pageLoader::loadTimesheetPage() {
   std::string inputString;
   int inputInt;
@@ -174,7 +215,7 @@ void pageLoader::loadTimesheetPage() {
     std::cout
         << "Would you like to manage another employees timesheet? (Y/N): ";
     std::cin >> inputString;
-    if (inputString == "Y") {
+    if (inputString == "Y" || inputString == "y") {
       // std::cout << "\nPlease enter employee username: ";
       // std::cin >> inputString;
 
@@ -378,6 +419,7 @@ void pageLoader::loadTimesheetPage() {
   navigateToPage(1);
 }
 
+// loads the login page
 void pageLoader::loadLogInPage() {
   std::string inputUsername;
   std::string inputPassword;
@@ -443,8 +485,10 @@ void pageLoader::loadLogInPage() {
   navigateToPage(1);
 }
 
+// loads employee management page
 void pageLoader::loadEmployeeManagementPage() {}
 
+// loads main page
 void pageLoader::loadMainPage() {
   std::cout << "=================== Main Page ===================\n\n";
   std::cout << "Welcome to the main page for managing employees and navigating "
@@ -473,6 +517,129 @@ void pageLoader::loadMainPage() {
       navigateToPage(4);  // employee management page
     } else if (inputString == "E" || inputString == "e") {
       exit(0);
+    } else {
+      std::cout << "Please try again.\n" << std::endl;
+    }
+  }
+}
+
+// loads the manage page, only accessible to admins
+void pageLoader::loadManagePage() {
+  std::cout
+      << "=================== Manage Employees Page ===================\n\n";
+
+  std::cout << "Welcome to the manage employee page" << std::endl;
+
+  while (currentPage == 4) {
+    std::string inputString;
+
+    std::cout << "Please choose an option:\n";
+    std::cout << "  1. Add an employee\n";
+
+    std::cout << "  Q. Return to main page\n\n";
+    std::cout << "Enter your choice: ";
+
+    std::cin >> inputString;
+    std::cout << std::endl;
+
+    if (inputString == "1") {
+      int inputInt;
+      std::string fullname, username, password, employeeType;
+
+      int payrate;
+
+      std::cout << "What will be the full name of the employee?: ";
+      // std::cin >> inputString;
+      std::getline(std::cin >> std::ws, inputString);
+
+      fullname = inputString;
+
+      std::cout << "What will be the username of the employee?: ";
+      std::cin >> inputString;
+
+      username = inputString;
+
+      std::string confirmString = "o";
+      while (confirmString != "Y" || confirmString != "y") {
+        std::cout << "What will be the password of the employee?: ";
+        std::cin >> inputString;
+
+        std::cout << "Are you sure you want to use this password? (Y/N) -> "
+                  << inputString;
+        std::cin >> confirmString;
+      }
+
+      // std::cout << "What will be the pay rate of the employee? (in dollars
+      // per "
+      //              "hour eg. 50): ";
+      // std::cin >> inputInt;
+
+      // payrate = inputInt;
+
+      // if (!(std::cin >> inputInt)) {
+      //   std::cin.clear();
+      //   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      //   std::cout << "Can't do that. The pay rate is now set to $30/h\n";
+      //   payrate = 30;
+      // } else if (inputInt < 0 || inputInt > 1000) {
+      //   std::cout << "Can't do that. The pay rate is now set to $30/h\n";
+      //   payrate = 30;
+      // }
+
+      std::cout << "\n\nWhat job role is the employee? \n";
+
+      std::cout << "  1. Manager\n";
+      std::cout << "  2. General\n";
+      std::cout << "  3. Sales\n";
+      std::cout << "  4. Accounting\n";
+      std::cout << "  5. Intern\n";
+      std::cout << "  6. CEO\n";
+      std::cout << "  7. Receptionist\n";
+      std::cout << "Please choose an option:\n";
+      std::cin >> inputString;
+
+      employeeType = inputString;
+
+      confirmString = "o";
+      while (confirmString != "Y" && inputString != "y" &&
+             confirmString != "N" && inputString != "n") {
+        std::cout << "These are your intending settings for the new employee: "
+                  << std::endl;
+        std::cout << "  Name: " << fullname << std::endl;
+        std::cout << "  Username: " << username << std::endl;
+        std::cout << "  Password: " << password << std::endl;
+        std::cout << "Are you happy with these settings? (Y/N): ";
+        std::cin >> confirmString;
+      }
+      if (confirmString == "Y" || confirmString == "y") {
+        if (inputString == "1") {
+          Manager* newEmp = new Manager(0, fullname, username, password);
+          company->employeeList.push_back(newEmp);
+        } else if (inputString == "2") {
+          Generic* newEmp = new Generic(0, fullname, username, password);
+          company->employeeList.push_back(newEmp);
+        } else if (inputString == "3") {
+          Sales* newEmp = new Sales(0, fullname, username, password);
+          company->employeeList.push_back(newEmp);
+        } else if (inputString == "4") {
+          Accounting* newEmp = new Accounting(0, fullname, username, password);
+          company->employeeList.push_back(newEmp);
+        } else if (inputString == "5") {
+          Intern* newEmp = new Intern(0, fullname, username, password);
+          company->employeeList.push_back(newEmp);
+        } else if (inputString == "6") {
+          CEO* newEmp = new CEO(0, fullname, username, password);
+          company->employeeList.push_back(newEmp);
+        } else if (inputString == "7") {
+          Receptionist* newEmp =
+              new Receptionist(0, fullname, username, password);
+          company->employeeList.push_back(newEmp);
+        } else if (inputString == "2") {
+        }
+      }
+
+    } else if (inputString == "Q" || inputString == "q") {
+      navigateToPage(1);
     } else {
       std::cout << "Please try again.\n" << std::endl;
     }

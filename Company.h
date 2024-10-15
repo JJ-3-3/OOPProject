@@ -25,15 +25,26 @@ class Company {
   int numTotalShares = Share::numTotalShares;
 
  public:
+  // vector of a list of employees
   std::vector<Employee *> employeeList;
+
+  //
   Employee *companyRep;
+
+  // paramaterised constructor
   Company(double shareValue, double theTaxRate,
           std::vector<Employee *> listOfEmployees)
       : taxRate(theTaxRate), employeeList(listOfEmployees) {
     shareValue = Share::shareValue;
   };
+
+  // assigns shares to employees
   void assignShares(Employee *receivingEmp, int shareAmount);
+
+  // assigns shares to Executive job roles
   void assignExecShare(int employeeID, int maxShares, int curShareNum);
+
+  // function to give the ability to buy back shares
   void buyBackShare(Employee *targetEmp);
   void changeTotalShareValue();  // randomised change to share value to
                                  // replicate stock market

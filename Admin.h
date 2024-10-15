@@ -11,9 +11,13 @@ class Admin : public Employee {
   float adminBonus;
 
  public:
+  // calculate pay for each employee
   float calculatePay(Company* company);
 
+  // add bonuses to specific employees
   void addEmployeeBonus(int employeeID);
+
+  // default constructor with parameters
   Admin(int id, std::string name, std::string username, std::string password)
       : Employee(id, name, username, password) {
     isAdmin = true;

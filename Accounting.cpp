@@ -2,14 +2,14 @@
 
 using namespace std;
 
-// Method to generate a report based on the specified report type
+// method to generate a report based on the specified report type
 void Accounting::generateReport(string reportType) {
   cout << "Generating " << reportType << " report for employee " << employeeName
        << " (ID: " << employeeID << ")." << endl;
-  // Additional report generation logic can be added here
+  // additional report generation logic can be added here
 }
 
-// Method to calculate all pay for the accounting employee
+// method to calculate all pay for the accounting employees
 bool Accounting::calculateAllPay(Company* company) {
   for (int i = 0; i < company->employeeList.size(); i++) {
     std::cout << "\n\n==================== Pay for "
@@ -23,7 +23,7 @@ bool Accounting::calculateAllPay(Company* company) {
 
   return true;
 
-  // Example calculation: for simplicity, we might just multiply payRate by a
+  // example calculation: for simplicity, we might just multiply payRate by a
   // fixed number of hours worked
   //   float hoursWorked = 40.0;  // Assuming a standard 40-hour work week
   //   float totalPay = payRate * hoursWorked;

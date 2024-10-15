@@ -9,7 +9,10 @@ using namespace std;
 
 class Receptionist : public Normal {
  public:
+  // default constructor
   Receptionist();
+
+  // paramaterised constructor
   Receptionist(int id, std::string name, std::string username,
                std::string password)
       : Normal(id, name, username, password) {};

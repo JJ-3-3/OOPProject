@@ -9,7 +9,10 @@
 
 class CEO : public Admin {
  public:
+  // default constructor
   CEO();
+
+  // parametarised constructor
   CEO(int id, std::string name, std::string username, std::string password)
       : Admin(id, name, username, password) {
     payRate = 60;

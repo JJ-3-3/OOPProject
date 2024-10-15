@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+// converts local time to hours
 std::string timeToHours(time_t t) {
   struct tm* timeInfo = localtime(&t);
 
@@ -18,10 +19,13 @@ std::string timeToHours(time_t t) {
   return std::string(formattedStr);
 }
 
+// default constructor
 Timesheet::Timesheet(/* args */) { prevTime = time(0); }
 
+// timesheet destructor
 Timesheet::~Timesheet() {}
 
+// gets total worked time
 float Timesheet::getTotalWorkedTime() {
   float totalTime = 0;
   for (int i = 0; i < timesheetEntries.size(); i++) {
@@ -48,8 +52,10 @@ float Timesheet::getTotalWorkedTime() {
   return totalTime;
 }
 
+// resets timehsheet entried
 void Timesheet::resetTimesheetEntries() { timesheetEntries.clear(); }
 
+// prints timesheet
 void Timesheet::printTimesheet() {
   std::cout << "\n================ Timesheet Entries ================\n"
             << std::endl;
@@ -81,6 +87,7 @@ void Timesheet::printTimesheet() {
             << std::endl;
 }
 
+// adds a timesheet entry
 void Timesheet::addEntry(time_t startedTime, time_t endedTime, int breakTime,
                          std::string workingPeriodType,
                          double hoursMultiplier) {
@@ -91,6 +98,7 @@ void Timesheet::addEntry(time_t startedTime, time_t endedTime, int breakTime,
             << std::endl;
 }
 
+// clocks out all employees
 void Timesheet::clockOutAll() {
   for (int i = 0; i < timesheetEntries.size(); i++) {
     if (timesheetEntries[i].hoursMultiplier == -1) {
@@ -99,11 +107,13 @@ void Timesheet::clockOutAll() {
   }
 }
 
+// clocks out a single employee
 void Timesheet::clockOutSingle(std::string worktype, double hourMult,
                                int breakLength) {
   timesheetEntries.back().clockOut(worktype, hourMult, breakLength);
 }
 
+// clocks back in all employees
 void Timesheet::clockIn() {
   clockOutAll();
   timesheetEntries.push_back(TimesheetEntry());

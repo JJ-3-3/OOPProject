@@ -1,7 +1,9 @@
 // testing shareprice change
+#include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <thread>
 
 double changeTotalShareValue(double share) {
   double randDouble = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
@@ -23,6 +25,7 @@ int main(void) {
     shareValue = changeTotalShareValue(shareValue);
 
     std::cout << "change number " << i + 1 << ": " << shareValue << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
     // sleep(1);
   }

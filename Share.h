@@ -7,7 +7,10 @@ class Share {
   static int numTotalShares;
 
  public:
+  // default constructor
   Share();
+
+  // paramaterised constructor
   Share(double shareValue, int numTotalShares);
 };
 

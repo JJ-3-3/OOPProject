@@ -11,6 +11,7 @@
 
 #include "Company.h"
 
+// coverts an input time into a string
 std::string timeToString(time_t t) {
   struct tm* timeInfo = localtime(&t);
   char formattedStr[80];
@@ -27,6 +28,7 @@ Employee::~Employee() {
   }
 }
 
+// paramaterised constructor
 Employee::Employee(int id, std::string name, std::string username,
                    std::string password)
     : employeeID(id),
@@ -76,14 +78,21 @@ void Employee::setClockTimesForDay(int week, int day, int clockIn,
   // }
 }
 
+// pay setter
 void Employee::setPay(float pay) { payRate = pay; }
 
+// print number of shares, value of each share, and total value
 void Employee::printShareSummary() {
   std::cout << "\n==================== Share Summary ====================\n\n";
+  std::cout << "Current total number of shares issued by the company: "
+            << Share::numTotalShares << std::endl;
   std::cout << "Amount of shares owned: " << totalShares() << std::endl;
-  std::cout << "Value per share: $" << std::fixed << std::setprecision(2)
+  std::cout << "Current Share Price is: $" << std::fixed << std::setprecision(2)
             << Share::shareValue << std::endl;
-  std::cout << "Total share value: $" << std::fixed << std::setprecision(2)
-            << Share::shareValue * totalShares() << "\n"
+  std::cout << "Stake in this Company is : $" << std::fixed
+            << std::setprecision(2) << totalShares() * Share::shareValue
             << std::endl;
+  std::cout << "Total Company value: $" << std::fixed << std::setprecision(2)
+            << Share::shareValue * Share::numTotalShares << "\n"
+            << "\n";
 }
