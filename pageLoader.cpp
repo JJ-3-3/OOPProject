@@ -83,6 +83,9 @@ void pageLoader::navigateToPage(int pageIndex) {
 }
 
 void pageLoader::loadFinancePage() {
+  std::cout << "Current Share Price is: " << Share::shareValue << std::endl;
+  std::cout << "Current Number of Issued Shares is: " << Share::numTotalShares
+            << std::endl;
   std::string inputString;
   std::string exitString = "Q";
 
@@ -125,7 +128,7 @@ void pageLoader::loadFinancePage() {
       fetchedEmployee->calculatePay(company);
 
     } else if (inputString == "3") {
-      curEmployee->printPayments();
+      curEmployee->calculateAllPay(company);
     } else if (inputString == "4") {
       Employee* fetchedEmployee;
       bool foundEmp = false;
@@ -147,6 +150,8 @@ void pageLoader::loadFinancePage() {
       fetchedEmployee->printPayments();
     } else if (inputString == "5") {
       curEmployee->printShareSummary();
+      std::cout << "Current total number of shares issued by the company: "
+                << Share::numTotalShares << std::endl;
     } else if (inputString == "E" || inputString == "e") {
       exit(0);
     } else if (inputString == "Q" || inputString == "q") {
@@ -200,10 +205,9 @@ void pageLoader::loadTimesheetPage() {
     // clearScreen();
     std::cout << "Please choose an option:\n";
     std::cout << "  1. View timesheet\n";
-    std::cout
-        << "  2. Enter a timesheet working slot for the current employee\n";
-    std::cout << "  3. Clock in for the current employee\n";
-    std::cout << "  4. Clock out for the current employee\n";
+    std::cout << "  2. Enter a timesheet working slot\n";
+    std::cout << "  3. Clock in \n";
+    std::cout << "  4. Clock out\n";
     std::cout << "  Q. Return to main page\n\n";
     std::cout << "Enter your choice: ";
 

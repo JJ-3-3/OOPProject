@@ -1,24 +1,49 @@
-test : test.cpp
-	g++ -o testing test.cpp Employee.cpp Share.cpp Timesheet.cpp TimesheetEntry.cpp Company.cpp
+# Makefile for building and testing the program
+
+# Compiler to use
+CXX = g++
+
+# Flags for the compiler
+CXXFLAGS = -o testing
+
+# Source files
+SRC = Employee.cpp Share.cpp Timesheet.cpp TimesheetEntry.cpp Company.cpp Admin.cpp pageLoader.cpp Normal.cpp Manager.cpp Accounting.cpp
+
+# Default target to build and test
+all: test real share page system share2
+
+# Target for testing the basic functionality
+test: test.cpp $(SRC)
+	$(CXX) $(CXXFLAGS) test.cpp $(SRC)
 	./testing
 	rm -f testing
 
-real : real.cpp
-	g++ -o testing real.cpp Employee.cpp Share.cpp Timesheet.cpp TimesheetEntry.cpp Company.cpp pageLoader.cpp
+# Target for real functionality testing
+real: real.cpp $(SRC)
+	$(CXX) $(CXXFLAGS) real.cpp $(SRC)
 	./testing
 	rm -f testing
 
-share : testShareFunc.cpp
-	g++ -o testing testShareFunc.cpp
+# Target for testing share functionality
+share: testShareFunc.cpp
+	$(CXX) $(CXXFLAGS) testShareFunc.cpp
 	./testing
 	rm -f testingRandShareFunc
 
-page system: pageLoader.cpp
-	g++ -o testing pageLoader.cpp
+# Target for testing page loading functionality
+page: pageLoader.cpp
+	$(CXX) $(CXXFLAGS) pageLoader.cpp
 	./testing
 	rm -f testing
 
-share2 : testShareChange.cpp
-	g++ -o testing testShareChange.cpp Company.cpp Employee.cpp Share.cpp Timesheet.cpp TimesheetEntry.cpp
+# Target for testing share change functionality
+share2: testShareChange.cpp $(SRC)
+	$(CXX) $(CXXFLAGS) testShareChange.cpp $(SRC)
 	./testing
-	rm -f testing share change function through company
+	rm -f testing
+
+# Clean up the generated files
+clean:
+	rm -f testing testingRandShareFunc
+
+.PHONY: all test real share page share2 clean

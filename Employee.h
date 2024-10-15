@@ -45,17 +45,23 @@ class Employee {
 
  public:
   std::vector<Share*> shareList;
-  Employee(int id, std::string name, std::string username, std::string password,
-           bool anAdmin);
+  Employee(int id, std::string name, std::string username,
+           std::string password);
   // double returnOverallShareValue();
   void addShare(Share* addedShare);
   int totalShares() { return shareList.size(); }
   void printShareSummary();
   // virtual
-  float calculatePay(Company* thecompany);
+  virtual float calculatePay(Company* thecompany) = 0;
   void printPayments();
   // virtual
   std::string getWorkTypeName();
+
+  virtual bool calculateAllPay(Company* company) {
+    std::cout << "\nCannot run that with your current permissions\n"
+              << std::endl;
+    return false;
+  };
 
   void setClockTimesForDay(int week, int day, int clockIn, int clockOut);
   void clock() { employeeTimesheet.clockIn(); };
@@ -78,6 +84,7 @@ class Employee {
   bool isAnAdmin() { return isAdmin; }
 
   void setPay(float pay);
+  ~Employee();
 };
 
 #endif  // EMPLOYEE_H

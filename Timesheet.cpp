@@ -34,15 +34,15 @@ float Timesheet::getTotalWorkedTime() {
 
     totalTime += ((static_cast<float>(timesheetEntries[i].timeWorked) / 3600) *
                   timesheetEntries[i].hoursMultiplier);
-    }
+  }
 
-  std::cout << "TOTAL TIME WORKED: " << totalTime << std::endl;
+  // std::cout << "TOTAL TIME WORKED: " << totalTime << std::endl;
 
-  std::cout << "\nTimesheet Entries: \n~~~~~~~~~~~~~~~~~~~~~~~~ \n"
-            << std::endl;
+  // std::cout << "\nTimesheet Entries: \n~~~~~~~~~~~~~~~~~~~~~~~~ \n"
+  //           << std::endl;
   printTimesheet();
 
-  std::cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~\n" << std::endl;
+  // std::cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~\n" << std::endl;
 
   resetTimesheetEntries();
   return totalTime;

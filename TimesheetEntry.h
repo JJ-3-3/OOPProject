@@ -1,4 +1,3 @@
-
 #ifndef TIMESHEETENTRY_H
 #define TIMESHEETENTRY_H
 
@@ -11,7 +10,7 @@ class TimesheetEntry {
  private:
   /* data */
 
-  public:
+ public:
   time_t startTime;
   time_t endTime;
   int breakDuration;

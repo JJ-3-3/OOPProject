@@ -3,20 +3,15 @@
 
 #include <iostream>
 
-#include "Employee.h"
 #include "Normal.h"
 
 using namespace std;
 
 class Intern : public Normal {
- protected:
-  float payRate;
-  string employeeName;
-  int employeeID;
-
  public:
   Intern();
-  Intern(string employeeName, int employeeID, float payRate);
+  Intern(int id, std::string name, std::string username, std::string password)
+      : Normal(id, name, username, password) {};
 };
 
 #endif  // INTERN_H

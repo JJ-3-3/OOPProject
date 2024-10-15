@@ -1,10 +1,11 @@
-
 #ifndef COMPANY_H
 #define COMPANY_H
 
+#include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <thread>
 #include <vector>
 
 #include "Employee.h"
@@ -17,9 +18,11 @@ class Company {
 
   int maxEmployees;
 
-  // double shareValue;
+  // unnecessary variable
+  //  double shareValue;
 
   double taxRate;
+  int numTotalShares = Share::numTotalShares;
 
  public:
   std::vector<Employee *> employeeList;
@@ -27,15 +30,19 @@ class Company {
   Company(double shareValue, double theTaxRate,
           std::vector<Employee *> listOfEmployees)
       : taxRate(theTaxRate), employeeList(listOfEmployees) {
-    Share::shareValue = shareValue;
+    shareValue = Share::shareValue;
   };
   void assignShares(Employee *receivingEmp, int shareAmount);
   void assignExecShare(int employeeID, int maxShares, int curShareNum);
   void buyBackShare(Employee *targetEmp);
-  void changeTotalShareValue();
-  void increaseTotalShareNum(int increase);
+  void changeTotalShareValue();  // randomised change to share value to
+                                 // replicate stock market
+  void increaseTotalShareNum(
+      int increase);  // dilute share value while adding more shares
   // double returnTotalShareValue();
   Employee *findEmployee(std::string username);
 };
 
-#endif
+// run separate thread to update share value every second
+
+#endif  // COMPANY_H

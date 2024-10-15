@@ -8,14 +8,13 @@
 // using namespace std;
 
 class CEO : public Admin {
- protected:
-  float payRate;
-  std::string employeeName;
-  int employeeID;
-
  public:
   CEO();
-  CEO(float pay, std::string name, int id);
+  CEO(int id, std::string name, std::string username, std::string password)
+      : Admin(id, name, username, password) {
+    payRate = 60;
+    adminBonus = 5;
+  };
 };
 
 #endif  // CEO_H

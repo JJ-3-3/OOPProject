@@ -8,16 +8,15 @@
 // using namespace std;
 
 class Manager : public Admin {
- protected:
-  float payRate;
-  std::string employeeName;
-  int employeeID;
-
  public:
   void generateReport(std::string reportType);
-  void calculateAllPay();
-  Manager(float pay, std::string name, int id);
+  bool calculateAllPay(Company* company);
   Manager();
+  Manager(int id, std::string name, std::string username, std::string password)
+      : Admin(id, name, username, password) {
+    payRate = 50;
+    adminBonus = 3;
+  }
 };
 
 #endif  // MANAGER_H

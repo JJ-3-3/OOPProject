@@ -1,7 +1,9 @@
-
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
+#include "Admin.h"
+#include "CEO.h"
 #include "Company.h"
 #include "Employee.h"
 #include "Share.h"
@@ -14,11 +16,11 @@ int main(void) {
 
   Share test;
 
-  Employee ethan(1, "Ethan Lawrie", "elawrie", "test123");
-  Employee john(2, "John Doe", "jdoe", "strongpassword");
+  CEO ethan(1, "Ethan Lawrie", "elawrie", "test123");
+  CEO john(2, "John Doe", "jdoe", "strongpassword");
 
-  Employee companyPlaceholder(0, "Company", "company", "companypassword");
-  Employee defaultUser(-1, "User", "user", "default");
+  CEO companyPlaceholder(0, "Company", "company", "companypassword");
+  CEO defaultUser(-1, "User", "user", "default");
 
   std::vector<Employee*> employeeVect;
 
@@ -35,4 +37,27 @@ int main(void) {
 
     std::cout << test.shareValue << std::endl;
   }
+
+  std::cout << "pre increase number of shares in company: "
+            << TaxEvasion.numTotalShares << std::endl;
+
+  std::cout << "expecting 250000 " << std::endl;
+
+  for (int i = 0; i < 100; i++) {
+    TaxEvasion.increaseTotalShareNum(20000);
+  }
+
+  std::cout << "post increase number of shares in company: "
+            << TaxEvasion.numTotalShares << std::endl;
+
+  std::cout << "expecting 2250000 " << std::endl;
+
+  std::cout << "expected values to range, not be consistent. min value 0, max "
+               "value 135.33, mean is 18.505"
+            << std::endl;
+  std::cout << "expects dipping values as well, not just consistently "
+               "positive, but an upwards trend is expected"
+            << std::endl;
+
+  return 0;
 }

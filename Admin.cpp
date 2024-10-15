@@ -1,8 +1,6 @@
-#include "Normal.h"
+#include "Admin.h"
 
-// Default constructor for the Normal class
-
-float Normal::calculatePay(Company* company) {
+float Admin::calculatePay(Company* company) {
   float hoursWorked = 0;
   float fullPay;
 
@@ -37,11 +35,11 @@ float Normal::calculatePay(Company* company) {
   int sharesAllowed = std::floor((fullPay * 0.2) / Share::shareValue);
 
   if (company->companyRep->totalShares() >= sharesAllowed) {
-    std::cout << "PAYING FROM COMPANY" << std::endl;
+    // std::cout << "PAYING FROM COMPANY" << std::endl;
     company->assignShares(this, sharesAllowed);
   } else if (company->companyRep->totalShares() > 0 &&
              company->companyRep->totalShares() < sharesAllowed) {
-    std::cout << "PAYING FROM REST OF COMPANY" << std::endl;
+    // std::cout << "PAYING FROM REST OF COMPANY" << std::endl;
     // pays the rest of the available shares
     company->assignShares(this, company->companyRep->totalShares());
   } else {
