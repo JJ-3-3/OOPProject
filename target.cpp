@@ -54,7 +54,7 @@ int main() {
 
   std::vector<Share *> initialShares;
 
-  int shareAmount = 12500000;
+  int shareAmount = 125000;
 
   Share::numTotalShares = shareAmount;
 
