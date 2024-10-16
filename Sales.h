@@ -16,8 +16,7 @@ class Sales : public Normal {
   Sales();
 
   // paramaterised constructor
-  Sales(int id, std::string name, std::string username, std::string password)
-      : Normal(id, name, username, password) {}
+  Sales(int id, std::string name, std::string username, std::string password);
 
   // calculates commission based on the employee's sales
   void calcCommission();

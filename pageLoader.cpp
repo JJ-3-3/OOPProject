@@ -128,10 +128,13 @@ void pageLoader::loadFinancePage() {
     // selection of options for next page to navigate to
     std::cout << "Please choose an option:\n";
     std::cout << "  1. Process payments for current user\n";
-    std::cout << "  2. Process payments for a specific user\n";
-    std::cout << "  3. Process payments for all users\n";
-    std::cout << "  4. View payment history for a specific user\n";
-    std::cout << "  5. View share holding statement\n";
+    std::cout << "  2. View share holding statement\n";
+    if (isAdmin) {
+      std::cout << "  3. Process payments for all users\n";
+      std::cout << "  4. View payment history for a specific user\n";
+      std::cout << "  5. Process payments for a specific user\n";
+    }
+
     std::cout << "  Q. Return to main page\n";
     std::cout << "  E. Exit program (finish)\n\n";
     std::cout << "Enter your choice: ";
@@ -145,21 +148,25 @@ void pageLoader::loadFinancePage() {
 
     if (inputString == "1") {
       curEmployee->calculatePay(company);
-    } else if (inputString == "2") {
+    } else if (inputString == "5") {
       Employee* fetchedEmployee;
       bool foundEmp = false;
       std::string inputUsername;
 
-      while (!foundEmp) {
-        std::cout << "Please enter employee username: ";
-        std::cin >> inputUsername;
-        fetchedEmployee = company->findEmployee(inputUsername);
+      if (!isAdmin) {
+        fetchedEmployee = curEmployee;
+      } else {
+        while (!foundEmp) {
+          std::cout << "Please enter employee username: ";
+          std::cin >> inputUsername;
+          fetchedEmployee = company->findEmployee(inputUsername);
 
-        if (fetchedEmployee == nullptr) {
-          std::cout << "Couldn't find employee!\n" << std::endl;
+          if (fetchedEmployee == nullptr) {
+            std::cout << "Couldn't find employee!\n" << std::endl;
 
-        } else {
-          foundEmp = true;
+          } else {
+            foundEmp = true;
+          }
         }
       }
 
@@ -186,7 +193,7 @@ void pageLoader::loadFinancePage() {
       }
 
       fetchedEmployee->printPayments();
-    } else if (inputString == "5") {
+    } else if (inputString == "2") {
       curEmployee->printShareSummary();
     } else if (inputString == "E" || inputString == "e") {
       exit(0);
@@ -554,18 +561,18 @@ void pageLoader::loadManagePage() {
 
       fullname = inputString;
 
-      std::cout << "What will be the username of the employee?: ";
+      std::cout << "What will be the username of the employee? (no spaces): ";
       std::cin >> inputString;
 
       username = inputString;
 
       std::string confirmString = "o";
-      while (confirmString != "Y" || confirmString != "y") {
+      while (confirmString != "Y" && confirmString != "y") {
         std::cout << "What will be the password of the employee?: ";
         std::cin >> inputString;
 
         std::cout << "Are you sure you want to use this password? (Y/N) -> "
-                  << inputString;
+                  << inputString << ": ";
         std::cin >> confirmString;
       }
 

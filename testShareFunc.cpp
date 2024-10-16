@@ -24,7 +24,8 @@ int main(void) {
   for (int i = 0; i < 365; i++) {
     shareValue = changeTotalShareValue(shareValue);
 
-    std::cout << "change number " << i + 1 << ": " << shareValue << std::endl;
+    std::cout << "iteration change number " << i + 1 << ": " << shareValue
+              << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
     // sleep(1);

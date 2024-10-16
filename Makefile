@@ -4,13 +4,14 @@
 CXX = g++
 
 # Flags for the compiler
-CXXFLAGS = -o testing
+CXXFLAGS = -o testing 
+# -Wall -std=c++11
 
 # Source files
-SRC = Employee.cpp Share.cpp Timesheet.cpp TimesheetEntry.cpp Company.cpp Admin.cpp pageLoader.cpp Normal.cpp Manager.cpp Accounting.cpp
+SRC = Employee.cpp Share.cpp Timesheet.cpp TimesheetEntry.cpp Company.cpp Admin.cpp pageLoader.cpp Normal.cpp Manager.cpp Accounting.cpp CEO.cpp Sales.cpp
 
 # Default target to build and test
-all: test share share2 target
+all: test share share2 clean 
 
 # Target for testing the basic functionality
 test: test.cpp $(SRC)

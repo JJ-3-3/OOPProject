@@ -29,7 +29,7 @@ int main() {
   CEO ethan(1, "Ethan Lawrie", "elawrie", "test123");
   Manager john(2, "John Doe", "jdoe", "strongpassword");
   Accounting billy(2, "Billy Doe", "bdoe", "be");
-  Intern alpha(3, "Hello World", "hworld", "hello");
+  Intern alpha(3, "Jerry McIntern", "jerry", "abcd");
 
   CEO companyPlaceholder(0, "Company", "company", "companypassword");
   CEO defaultUser(-1, "User", "user", "default");
